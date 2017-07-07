@@ -155,7 +155,7 @@ def register():
         else:
             return apology ("Error")
         print (un)
-        ran = db.execute("INSERT INTO "users" (username, hash) VALUES (:username, :encrypt)", username = un, encrypt = encrypt)
+        ran = db.execute("INSERT INTO users (username, hash) VALUES (:username, :encrypt)", username = un, encrypt = encrypt)
         if (ran== None):
             return apology("Error")
         return render_template("index.html")
