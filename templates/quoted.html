@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Stock Information
+{% endblock %}
+
+{% block main %}
+A share of {{quote["symbol"]}} is {{quote["price"]}}
+{% endblock %}
