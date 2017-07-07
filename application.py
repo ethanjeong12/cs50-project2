@@ -11,7 +11,7 @@ from helpers import *
 # configure application
 app = Flask(__name__)
 
-# ensure responses aren't cached
+# ensure responses aren"t cached
 if app.config["DEBUG"]:
     @app.after_request
     def after_request(response):
@@ -49,15 +49,15 @@ def buy():
             nu = int(request.form.get("number"))
             if not nu:
                 return apology("Enter shares")
-            row = db.execute("SELECT * FROM users WHERE id=:id", id=session['user_id'])
-            username = row[0]['username']
+            row = db.execute("SELECT * FROM users WHERE id=:id", id=session["user_id"])
+            username = row[0]["username"]
             check = lookup(st)
             if not check:
                 return apology("Invalid symbol")
             elif nu < 0:
                 return apology("Not positive Number")
             pr = lookup(st) ["price"]
-            cash = row[0]['cash']
+            cash = row[0]["cash"]
             if cash < nu*pr:
                 return apology("Cannot afford")
             
@@ -65,7 +65,7 @@ def buy():
             if not row1:
                 db.execute("INSERT INTO Stocks (username,shares,symbol) VALUES (:username,:shares,:symbol)", username=username,shares=nu,symbol=st)
             else: 
-                sto = row1[0]['shares']
+                sto = row1[0]["shares"]
                 sto = sto + nu
                 db.execute ("update Stocks set shares=:shares WHERE symbol=:symbol and username=:username" , shares=sto, username=username, symbol=st)
             return redirect(url_for("index"))
@@ -155,7 +155,7 @@ def register():
         else:
             return apology ("Error")
         print (un)
-        ran = db.execute("INSERT INTO 'users' (username, hash) VALUES (:username, :encrypt)", username = un, encrypt = encrypt)
+        ran = db.execute("INSERT INTO "users" (username, hash) VALUES (:username, :encrypt)", username = un, encrypt = encrypt)
         if (ran== None):
             return apology("Error")
         return render_template("index.html")
@@ -174,15 +174,15 @@ def sell():
         nu = int(request.form.get("number"))
         if not nu:
             return apology("Enter shares")
-        row = db.execute("SELECT * FROM users WHERE id=:id", id=session['user_id'])
-        username = row[0]['username']
+        row = db.execute("SELECT * FROM users WHERE id=:id", id=session["user_id"])
+        username = row[0]["username"]
         check = lookup(st)
         if not check:
             return apology("Invalid symbol")
         elif nu < 0:
             return apology("Negative Number")
         pr = lookup(st) ["price"]
-        cash = row[0]['cash']
+        cash = row[0]["cash"]
         if cash < nu*pr:
             return apology("Cannot sell")
         
@@ -190,7 +190,7 @@ def sell():
         if not row1:
             db.execute("INSERT INTO Stocks (username,shares,symbol) VALUES (:username,:shares,:symbol)", username=username,shares=nu,symbol=st)
         else: 
-            sto = row1[0]['shares']
+            sto = row1[0]["shares"]
             sto = sto + nu
             db.execute ("update Stocks set shares=:shares WHERE symbol=:symbol and username=:username" , shares=sto, username=username, symbol=st)
         return redirect(url_for("index"))
